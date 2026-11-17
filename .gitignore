@@ -1,0 +1,12 @@
+﻿# Frontend
+node_modules/
+dist/
+.vite/
+
+# Backend Gradle / IntelliJ / H2
+.gradle/
+build/
+out/
+.idea/
+*.iml
+data/

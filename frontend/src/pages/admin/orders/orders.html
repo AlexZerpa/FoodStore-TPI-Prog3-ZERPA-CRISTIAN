@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos - Food Store Admin</title>
+    <link rel="stylesheet" href="../../../style.css" />
+    <style> 
+        .admin-layout { display: flex; min-height: 100vh; background-color: #f8f6f4; }
+        .admin-sidebar {
+            width: 240px; background-color: #261710; color: #fff;
+            display: flex; flex-direction: column; justify-content: space-between; padding: 20px;
+        }
+        .sidebar-brand { font-size: 1.3rem; font-weight: bold; color: #f97316; margin-bottom: 25px; }
+        .sidebar-brand span {font-size: 0.75rem; color: #a8a29e; font-weight: normal; margin-left: 5px; }
+        .sidebar-nav { display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-nav a {
+            color: #e7e5e4; text-decoration: none; padding: 10px 14px; border-radius: 8px;
+            display: flex; align-items: center; gap: 10px; font-weight: 500;
+        }
+        .sidebar-nav a:hover, .sidebar-nav a.active { background-color: #ea580c; color: #fff; }
+        .sidebar-footer { border-top: 1px solid #44403c; padding-top: 15px; }
+        .sidebar-footer p { margin: 0 0 10px 0; font-size: 0.9rem; font-weight: 600; }
+        .btn-logout {
+            width: 100%; padding: 8px; background: #fff; color: #1c1917;
+            border: none; border-radius: 6px; font-weight: 600; cursor: pointer;
+        }
+        .admin-content { flex: 1; padding: 30px; }
+        .filter-bar { display:flex; align-items: center; gap: 12px; margin-bottom: 22px;}
+        .filter-bar input { flex: 1; padding: 8px 12px; border: 1px solid #d6d3d1; border-radius: 6px; }
+
+        .orders-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .order-card {
+        background: #fff; border-radius: 12px; padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: transform 0.2s;
+      }
+      .order-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.09); }
+      .order-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+      .order-top h3 { margin: 0; font-size: 1.08rem; }
+      .client-name { font-weight: 600; margin: 4px 0; color: #1c1917; }
+      .order-meta { font-size: 0.85rem; color: #78716c; margin: 0 0 14px 0; }
+      .order-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f5f5f4; padding-top: 12px; font-weight: 700; }
+
+      .badge { font-size: 0.74rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; text-transform: uppercase; }
+      .badge-PENDIENTE { background-color: #fef3c7; color: #b45309; }
+      .badge-CONFIRMADO { background-color: #dbeafe; color: #1d4ed8; }
+      .badge-TERMINADO { background-color: #dcfce7; color: #15803d; }
+      .badge-CANCELADO { background-color: #fee2e2; color: #b91c1c; }
+
+      .modal-backdrop {
+        position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+        display: none; align-items: center; justify-content: center; z-index: 50;
+      }
+      .modal-box { background: #fff; padding: 26px; border-radius: 14px; width: 470px; max-width: 92%; max-height: 88vh; overflow-y: auto; }
+      .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+      .close-modal { background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+      .info-box { background: #f8f6f4; padding: 14px; border-radius: 10px; margin-bottom: 16px; font-size: 0.9rem; }
+      .info-box p { margin: 4px 0; }
+      .item-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f5f5f4; }
+      .btn-primary {
+        width: 100%; background: #ea580c; color: #fff; border: none; padding: 11px;
+        border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 14px;
+      }
+
+    </style>
+
+</head>
+<body>
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div>
+          <div class="sidebar-brand">🍔 Food Store <span>Admin</span></div>
+          <nav class="sidebar-nav">
+            <a href="../adminHome/home.html">📊 Dashboard</a>
+            <a href="../categories/categories.html">📁 Categorías</a>
+            <a href="../products/products.html">🍕 Productos</a>
+            <a href="./orders.html" class="active">📦 Pedidos</a>
+            <a href="../../store/home/home.html">🏪 Ver Tienda</a>
+          </nav>
+        </div>
+        <div class="sidebar-footer">
+          <p id="admin-name">Admin</p>
+          <button id="btn-logout" class="btn-logout">Cerrar sesión</button>
+        </div>
+      </aside>
+
+      <main class="admin-content">
+        <h1 style="margin-top: 0;">Pedidos</h1>
+
+        <div class="filter-bar">
+          <label for="status-filter"><strong>Filtrar por estado:</strong></label>
+          <select id="status-filter">
+            <option value="ALL">Todos</option>
+            <option value="PENDIENTE">Pendiente</option>
+            <option value="CONFIRMADO">Confirmado</option>
+            <option value="TERMINADO">Terminado</option>
+            <option value="CANCELADO">Cancelado</option>
+          </select>
+        </div>
+
+        <div id="orders-grid" class="orders-grid">Cargando pedidos...</div>
+      </main>
+    </div>
+
+    <!-- Modal Detalle y Cambio de Estado -->
+    <div id="order-modal" class="modal-backdrop">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h2 id="modal-title" style="margin: 0;">Detalle del Pedido</h2>
+          <button type="button" id="btn-close-modal" class="close-modal">&times;</button>
+        </div>
+        <div id="modal-body"></div>
+      </div>
+    </div>
+
+    <script type="module" src="./orders.ts"></script>
+</body>
+</html>

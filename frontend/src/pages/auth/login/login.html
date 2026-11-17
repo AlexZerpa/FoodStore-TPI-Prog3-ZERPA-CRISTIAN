@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FoodStore - Iniciar Sesión</title>
+    <link rel="stylesheet" href="../../../style.css">
+</head>
+<body class="auth-body">
+    <div class="auth-card">
+        <h2>🛒 FoodStore</h2>
+        <p>Ingresa a tu cuenta para continuar</p>
+
+        <form id="form">
+            <input type="email" id="email" placeholder="Correo Electronico" required/>
+            <input type="password" id="password" placeholder="Contraseña" required/>
+
+            <p id="error-msg" style="color: #dc2626; font-size: 0.9rem; display: none; margin: 8px 0;"></p>
+
+            <button type="submit" style="width: 100%; background-color: #1a3c34; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer;" >
+                Ingresar
+            </button>
+        </form>
+              
+              
+        <a href="../register/register.html" class="auth-link">¿No tienes cuenta? Regístrate aquí</a>
+    </div>
+
+    <script type="module" src="./login.ts"></script>
+</body>
+</html>

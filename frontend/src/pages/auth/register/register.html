@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FoodStore - Registro</title>
+    <link rel="stylesheet" href="../../../style.css" />
+  </head>
+  <body class="auth-body">
+    <div class="auth-card">
+      <h2>🛒 FoodStore</h2>
+      <p>Creá tu cuenta de cliente</p>
+
+      <form id="register-form">
+        <input type="text" id="reg-nombre" placeholder="Nombre" required />
+        <input type="text" id="reg-apellido" placeholder="Apellido" required />
+        <input type="email" id="reg-email" placeholder="Correo electrónico" required />
+        <input type="tel" id="reg-celular" placeholder="Celular (opcional)" />
+        <input type="password" id="reg-password" placeholder="Contraseña (mínimo 6 caracteres)" required />
+
+        <p id="reg-error" style="color: #dc2626; font-size: 0.9rem; display: none; margin: 8px 0;"></p>
+
+        <button
+          type="submit"
+          style="width: 100%; background-color: #1a3c34; color: white; padding: 11px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;"
+        >
+          Registrarse
+        </button>
+      </form>
+
+      <a href="../login/login.html" class="auth-link">¿Ya tienes cuenta? Inicia sesión aquí</a>
+    </div>
+
+    <script type="module" src="./register.ts"></script>
+  </body>
+</html>

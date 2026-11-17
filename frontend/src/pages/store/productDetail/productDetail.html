@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FoodStore - Detalle de Producto</title>
+    <link rel="stylesheet" href="../../../style.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background-color: #f4f5f0;
+        color: #1f2937;
+      }
+
+      /* Barra superior verde oscuro */
+      .navbar {
+        background-color: #1a3c34;
+        color: #ffffff;
+        padding: 14px 36px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      }
+
+      .navbar-brand {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #ffffff;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .navbar-links {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .nav-item {
+        color: #e2e8f0;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        padding: 6px 12px;
+        border-radius: 6px;
+      }
+
+      .nav-item:hover {
+        background-color: rgba(255, 255, 255, 0.14);
+        color: #ffffff;
+      }
+
+      .cart-icon-link {
+        position: relative;
+        text-decoration: none;
+        font-size: 1.3rem;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        padding: 4px 8px;
+      }
+
+      .cart-badge {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        background-color: #d95d39;
+        color: #ffffff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 2px 6px;
+        border-radius: 999px;
+      }
+
+      .user-section {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        border-left: 1px solid rgba(255, 255, 255, 0.25);
+        padding-left: 18px;
+      }
+
+      .user-name {
+        font-weight: 600;
+        color: #ffffff;
+        font-size: 0.95rem;
+      }
+
+      .btn-logout {
+        background-color: transparent;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+      }
+
+      .btn-logout:hover {
+        background-color: #ffffff;
+        color: #1a3c34;
+      }
+
+      /* Contenedor Detalle */
+      .detail-container {
+        max-width: 1100px;
+        margin: 28px auto;
+        padding: 0 24px;
+      }
+
+      .back-link {
+        display: inline-block;
+        color: #d95d39;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.95rem;
+        margin-bottom: 18px;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
+      .detail-card {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 36px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .detail-img-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f9fafb;
+        border-radius: 14px;
+        padding: 16px;
+        overflow: hidden;
+      }
+
+      .detail-img {
+        width: 100%;
+        max-height: 380px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      .detail-title {
+        margin: 0 0 10px 0;
+        font-size: 2rem;
+        font-weight: 800;
+        color: #111827;
+      }
+
+      .detail-desc {
+        margin: 0 0 18px 0;
+        font-size: 1rem;
+        color: #6b7280;
+        line-height: 1.5;
+      }
+
+      .detail-price {
+        font-size: 2.1rem;
+        font-weight: 800;
+        color: #d95d39;
+        margin-bottom: 20px;
+      }
+
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #f3f4f6;
+        font-size: 0.95rem;
+        color: #4b5563;
+      }
+
+      .badge-available {
+        background-color: #dcfce7;
+        color: #166534;
+        font-size: 0.8rem;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 999px;
+      }
+
+      .badge-unavailable {
+        background-color: #fee2e2;
+        color: #b91c1c;
+        font-size: 0.8rem;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 999px;
+      }
+
+      .qty-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 18px;
+      }
+
+      .qty-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .qty-btn {
+        width: 36px;
+        height: 36px;
+        border: 1px solid #d1d5db;
+        background: #f9fafb;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .qty-btn:hover {
+        background: #e5e7eb;
+      }
+
+      .qty-value {
+        min-width: 36px;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+
+      .stock-hint {
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin: 10px 0 20px 0;
+      }
+
+      .btn-add-detail {
+        background-color: #1a3c34;
+        color: #ffffff;
+        border: none;
+        padding: 14px 28px;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .btn-add-detail:hover:not(:disabled) {
+        background-color: #122b25;
+      }
+
+      .btn-add-detail:disabled {
+        background-color: #9ca3af;
+        cursor: not-allowed;
+      }
+
+      .confirm-banner {
+        display: none;
+        margin-top: 14px;
+        padding: 10px 14px;
+        background-color: #dcfce7;
+        color: #166534;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="navbar">
+      <a href="../home/home.html" class="navbar-brand">🛒 FoodStore</a>
+
+      <nav class="navbar-links">
+        <a href="../home/home.html" class="nav-item">Catálogo</a>
+        <a href="../../client/orders/orders.html" class="nav-item">Mis pedidos</a>
+
+        <a href="../cart/cart.html" class="cart-icon-link" title="Mi carrito">
+          🛒 <span id="cart-count" class="cart-badge">0</span>
+        </a>
+
+        <div class="user-section">
+          <span id="user-name" class="user-name">Usuario</span>
+          <button id="btn-logout" class="btn-logout">Cerrar sesión</button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="detail-container">
+      <a href="../home/home.html" class="back-link">← Volver al catálogo</a>
+      <div id="detail-content">Cargando producto...</div>
+    </main>
+
+    <script type="module" src="./productDetail.ts"></script>
+  </body>
+</html>
