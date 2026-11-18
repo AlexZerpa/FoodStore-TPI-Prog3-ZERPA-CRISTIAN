@@ -9,7 +9,7 @@
 ....
 
 ## ENLACE A GITHUB
-https://github.com/AlexZerpa/FoodStore-Prog3-ZERPA-CRISTIAN
+https://github.com/AlexZerpa/FoodStore-TPI-Prog3-ZERPA-CRISTIAN
 
 
 ## ✍️ Descripción
